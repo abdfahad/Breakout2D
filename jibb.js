@@ -1,3 +1,4 @@
+//Rough Code
 // cxt.beginPath();
 // cxt.rect(20,20,50,60);
 // cxt.fillstyle= "#FF0000";
@@ -90,3 +91,5 @@ cxt.lineTo(100,140);
 cxt.lineTo(200,140);
 cxt.fill();
 cxt.closePath();
+
+//Rough Code
