@@ -48,9 +48,17 @@ function draw(){                                     //Clears canvas and draws c
     drawBall();
     drawPaddle();
 
-    if( y+dy-ballRadius < 0 || y+dy+ballRadius > canvas.height ){
+    if( y+dy-ballRadius < 0 ){
         dy = -dy;
         ballColor = randomColorGenerator();
+    }else if(y+dy+ballRadius > canvas.height){
+        if(x > paddleX && x < paddleX + paddleWidth){                                                 //If touching paddle
+            dy = -dy;
+        }else{
+            alert("Game Over!");
+            document.location.reload();                      //Reload page
+            clearInterval(intID);                            //Restart the game
+        }
     }
     if( x+dx-ballRadius < 0 || x+dx+ballRadius > canvas.width ){
         dx = -dx;
@@ -100,7 +108,7 @@ function keyupHandler(e){
     } 
 };
 
-setInterval(draw,10);  //draw function will be executed every 10 ms
+var intID= setInterval(draw,10);  //draw function will be executed every 10 ms
 
 
 
