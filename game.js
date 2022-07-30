@@ -25,9 +25,51 @@ var paddleX= (canvas.width - paddleWidth)/2;
 var rightPressed= false;
 var leftPressed= false;
 
+//Brick Properties
+var brickWidth= 75;
+var brickHeight= 20;
+var offTop= 30;
+var offLeft= 30;
+var col= 5;
+var row= 3;
+var padd= 10;
+
+var bricks= [];
+for( let i=0; i<row; i++){
+    bricks[i]= [];
+    for(let j=0; j<col; j++){
+        bricks[i][j]= { x:0, y:0, status: true };
+    }
+}
+
+function drawBricks(){
+    var brickX=0;
+    var brickY=0;
+    for(let i=0; i<row; i++){
+        for(let j=0; j<col; j++){
+            brickX= j*(brickWidth + padd) + offLeft;
+            brickY= i*(brickHeight + padd) + offTop;
+            bricks[i][j].x= brickX;
+            bricks[i][j].y= brickY;
+            if(bricks[i][j].status){
+                drawBrick(bricks[i][j].x, bricks[i][j].y);
+            };
+        }
+    }
+};
+
 function drawBall(){
     cxt.beginPath();
     cxt.arc(x,y,ballRadius,0,(2*Math.PI));
+    cxt.stroke();
+    cxt.fillStyle = ballColor;
+    cxt.fill();
+    cxt.closePath();
+}
+
+function drawBrick(x,y){
+    cxt.beginPath();
+    cxt.rect(x, y, brickWidth, brickHeight);
     cxt.stroke();
     cxt.fillStyle = ballColor;
     cxt.fill();
@@ -45,8 +87,11 @@ function drawPaddle(){
 function draw(){                                     //Clears canvas and draws circle every 10 ms
     
     cxt.clearRect(0,0,canvas.width,canvas.height);
+    drawBricks();
     drawBall();
+    collisionDetection();
     drawPaddle();
+    
 
     if( y+dy-ballRadius < 0 ){
         dy = -dy;
@@ -108,6 +153,19 @@ function keyupHandler(e){
     } 
 };
 
+function collisionDetection(){
+    for( let i=0; i<row; i++){
+        for(let j=0; j<col; j++){
+            let b= bricks[i][j];
+            if( x>b.x && x<b.x+brickWidth && y>b.y && y<b.y+brickHeight){
+                b.status = false;
+                dy = -dy;
+            }
+        }
+    }
+}
+
+console.log(bricks);
 var intID= setInterval(draw,10);  //draw function will be executed every 10 ms
 
 
