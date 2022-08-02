@@ -150,6 +150,7 @@ function rgbGen(){
 
 document.addEventListener("keydown",keydownHandler,false);
 document.addEventListener("keyup",keyupHandler,false);
+document.addEventListener("mousemove",mouseHandler,false);
 
 function keydownHandler(e){
     if(e.key == 'Right' || e.key == 'ArrowRight'){
@@ -167,6 +168,12 @@ function keyupHandler(e){
         leftPressed = false;
     } 
 };
+function mouseHandler(e){
+    var relX= e.clientX - canvas.offsetLeft;
+    if( relX>0 && relX<canvas.width){
+        paddleX= relX - paddleWidth/2;
+    }
+}
 
 //----------------------Collisions and Score--------------------------------------------------------------
 
