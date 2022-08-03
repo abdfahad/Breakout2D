@@ -36,6 +36,7 @@ var padd= 10;
 const brickColor= randomColorGenerator();
 
 var score= 0;
+var lives = 3;
 
 var bricks= [];
 for( let i=0; i<row; i++){
@@ -70,6 +71,12 @@ function drawScore(){
     cxt.fillStyle= "black";
     cxt.fillText('Score: '+score,8,20);
 }
+function drawLives(){
+    cxt.font= "14px Arial";
+    cxt.fillStyle= "black";
+    cxt.fillText('Lives: '+lives,canvas.width-65,20);
+}
+
 
 function drawBall(){
     cxt.beginPath();
@@ -107,6 +114,7 @@ function draw(){                                     //Clears canvas and draws c
     collisionDetection();
     drawPaddle();
     drawScore();
+    drawLives();
     
     if( y+dy-ballRadius < 0 ){
         dy = -dy;
@@ -114,9 +122,16 @@ function draw(){                                     //Clears canvas and draws c
         if(x > paddleX && x < paddleX + paddleWidth){                                                 //If touching paddle
             dy = -dy;
         }else{
-            alert("Game Over!");
-            document.location.reload();                      //Reload page
-            clearInterval(intID);                            //Restart the game
+            if(lives==1){
+                alert("Game Over!");
+                document.location.reload();                      //Reload page
+                clearInterval(intID);                               //Restart the game
+            }else{
+                lives--;
+                x= canvas.width/2;
+                y= canvas.height - 10;
+                paddleX= (canvas.width - paddleWidth)/2;
+            }                          
         }
     }
     if( x+dx-ballRadius < 0 || x+dx+ballRadius > canvas.width ){
@@ -194,6 +209,8 @@ function collisionDetection(){
         }
     }
 }
+
+
 
 console.log(bricks);
 var intID= setInterval(draw,10);  //draw function will be executed every 10 ms
