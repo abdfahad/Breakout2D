@@ -9,8 +9,8 @@ var x= canvas.width/2;
 var y= canvas.height - 10;
 
 //displacement each 10 ms
-var dx= 2;
-var dy= -2;
+var dx= 4;
+var dy= -4;
 
 //Ball propeties
 const ballRadius= 8;
@@ -122,10 +122,10 @@ function draw(){                                     //Clears canvas and draws c
         if(x > paddleX && x < paddleX + paddleWidth){                                                 //If touching paddle
             dy = -dy;
         }else{
-            if(lives==1){
+            if(lives==0){
                 alert("Game Over!");
+                lives=3;
                 document.location.reload();                      //Reload page
-                clearInterval(intID);                               //Restart the game
             }else{
                 lives--;
                 x= canvas.width/2;
@@ -146,6 +146,7 @@ function draw(){                                     //Clears canvas and draws c
 
     x += dx;
     y += dy;
+    requestAnimationFrame(draw);
 };
 
 //----------------------Color Generator------------------------------------------------------------------------------------------------------------------------
@@ -202,18 +203,14 @@ function collisionDetection(){
                 score++;
                 if(score== row*col){
                     alert("CONGRATULATIONS! YOU WON");
-                    document.location.reload();                      //Reload page
-                    clearInterval(intID);                            //Restart the game
+                    document.location.reload();                      //Reload page                            
                 }
             } 
         }
     }
 }
 
-
-
-console.log(bricks);
-var intID= setInterval(draw,10);  //draw function will be executed every 10 ms
+draw();
 
 
 
