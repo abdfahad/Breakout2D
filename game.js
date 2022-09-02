@@ -1,23 +1,24 @@
 //fetching canvas and tool to paint
 var canvas= document.getElementById("board");
-var cxt= canvas.getContext("2d");
+canvas.width = window.innerWidth-30;
+canvas.height = window.innerHeight-40;
 
-//canvas size 480x320
+var cxt= canvas.getContext("2d");
 
 //Starting position of the Ball
 var x= canvas.width/2;
-var y= canvas.height - 10;
+var y= canvas.height - 14;
 
 //displacement each 10 ms
-var dx= 4;
-var dy= -4;
+var dx= 6;
+var dy= -6;
 
 //Ball propeties
 const ballRadius= 8;
 var ballColor = randomColorGenerator();;
 
 //Paddle properties
-const paddleWidth= 175;
+const paddleWidth= 100;
 const paddleHeight= 10;
 var paddleX= (canvas.width - paddleWidth)/2;
 
@@ -30,8 +31,8 @@ var brickWidth= 75;
 var brickHeight= 20;
 var offTop= 30;
 var offLeft= 30;
-var col= 5;
-var row= 3;
+var col= 15;
+var row= 8;
 var padd= 10;
 const brickColor= randomColorGenerator();
 
@@ -105,8 +106,8 @@ function drawPaddle(){
 }
 
 //----------------------Drawing the canvas--------------------------------------------------------------
-
-function draw(){                                     //Clears canvas and draws circle every 10 ms
+inital = true;
+async function draw(){                                     //Clears canvas and draws circle every 10 ms
     
     cxt.clearRect(0,0,canvas.width,canvas.height);
     drawBricks();
@@ -125,7 +126,7 @@ function draw(){                                     //Clears canvas and draws c
             if(lives==0){
                 alert("Game Over!");
                 lives=3;
-                document.location.reload();                      //Reload page
+                document.location.reload();                                                 //Reload page
             }else{
                 lives--;
                 x= canvas.width/2;
@@ -146,6 +147,7 @@ function draw(){                                     //Clears canvas and draws c
 
     x += dx;
     y += dy;
+    
     requestAnimationFrame(draw);
 };
 
